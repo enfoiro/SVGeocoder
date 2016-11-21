@@ -101,6 +101,12 @@ static NSString *googleMapsAPIKey;
     return geocoder;
 }
 
++ (SVGeocoder *)reverseGeocodePlaceId:(NSString *)placeId completion:(SVGeocoderCompletionHandler)block {
+    SVGeocoder *geocoder = [[self alloc] initWithPlaceId:placeId completion:block];
+    [geocoder start];
+    return geocoder;
+}
+
 + (void)setGoogleMapsAPIKey:(NSString *)key {
 
     googleMapsAPIKey = [key copy];
@@ -155,6 +161,14 @@ static NSString *googleMapsAPIKey;
     
     return [self initWithParameters:parameters completion:block];
 }
+
+- (SVGeocoder*)initWithPlaceId:(NSString*)placeId completion:(SVGeocoderCompletionHandler)block {
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       placeId, @"place_id", nil];
+
+    return [self initWithParameters:parameters completion:block];
+}
+
 
 #pragma mark - Private Utility Methods
 
